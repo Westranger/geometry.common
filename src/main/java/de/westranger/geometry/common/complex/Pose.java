@@ -1,4 +1,7 @@
-package de.westranger.geometry.common;
+package de.westranger.geometry.common.complex;
+
+import de.westranger.geometry.common.math.Rotation2D;
+import de.westranger.geometry.common.math.Vector2D;
 
 public final class Pose {
 

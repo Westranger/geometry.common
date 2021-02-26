@@ -1,4 +1,6 @@
-package de.westranger.geometry.common;
+package de.westranger.geometry.common.simple;
+
+import de.westranger.geometry.common.math.Vector2D;
 
 public final class Point2D {
     private final double x;

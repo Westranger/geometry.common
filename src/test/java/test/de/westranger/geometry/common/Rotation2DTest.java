@@ -1,6 +1,6 @@
 package test.de.westranger.geometry.common;
 
-import de.westranger.geometry.common.Rotation2D;
+import de.westranger.geometry.common.math.Rotation2D;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

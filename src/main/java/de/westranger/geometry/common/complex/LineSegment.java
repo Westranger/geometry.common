@@ -1,6 +1,9 @@
-package de.westranger.geometry.common;
+package de.westranger.geometry.common.complex;
 
-public final class LineSegment extends Segment{
+import de.westranger.geometry.common.math.Vector2D;
+import de.westranger.geometry.common.simple.Line;
+
+public final class LineSegment extends Segment {
     private final Line lineUpper;
     private final Line lineCenter;
     private final Line lineLower;

@@ -1,4 +1,4 @@
-package de.westranger.geometry.common;
+package de.westranger.geometry.common.math;
 
 public final class Vector2D {
     private double x;

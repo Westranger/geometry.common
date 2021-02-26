@@ -1,6 +1,8 @@
-package de.westranger.geometry.common;
+package de.westranger.geometry.common.simple;
 
-public final class Circle extends Geometry{
+import de.westranger.geometry.common.math.Vector2D;
+
+public class Circle extends Geometry {
     private final Vector2D center;
     private final Vector2D arcStart;
     private final Vector2D arcEnd;

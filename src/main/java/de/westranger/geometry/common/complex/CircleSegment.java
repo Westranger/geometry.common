@@ -1,4 +1,7 @@
-package de.westranger.geometry.common;
+package de.westranger.geometry.common.complex;
+
+import de.westranger.geometry.common.math.Vector2D;
+import de.westranger.geometry.common.simple.Circle;
 
 public final class CircleSegment extends Segment {
     private final Vector2D direction_center;

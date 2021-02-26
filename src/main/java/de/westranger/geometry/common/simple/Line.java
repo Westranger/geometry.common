@@ -1,5 +1,9 @@
-package de.westranger.geometry.common;
+package de.westranger.geometry.common.simple;
 
+import de.westranger.geometry.common.math.Vector2D;
+
+import java.util.List;
+import java.util.Optional;
 import java.util.OptionalDouble;
 
 public final class Line extends Geometry {
@@ -35,6 +39,26 @@ public final class Line extends Geometry {
         //final double u = numerator / denominator;
         final double t = line.getPositionVector().subtract(this.positionVector).cross(s) / denominator;
         return OptionalDouble.of(t);
+    }
+
+    public Point2D getClosestPointOnLine(final Point2D point) {
+        throw new RuntimeException("Not Yet Implemented");
+    }
+
+    public Optional<List<Point2D>> intersection(final Circle circle) {
+        throw new RuntimeException("Not Yet Implemented");
+    }
+
+    public Optional<List<Point2D>> intersection(final ArcCircle arc) {
+        throw new RuntimeException("Not Yet Implemented");
+    }
+
+    public Optional<List<Point2D>> intersection(final Ellipse elipse) {
+        throw new RuntimeException("Not Yet Implemented");
+    }
+
+    public Optional<List<Point2D>> intersection(final ArcEllipse arc) {
+        throw new RuntimeException("Not Yet Implemented");
     }
 
     public Vector2D getPositionVector() {

@@ -1,7 +1,7 @@
 package test.de.westranger.geometry.common;
 
-import de.westranger.geometry.common.CircleSegment;
-import de.westranger.geometry.common.Vector2D;
+import de.westranger.geometry.common.complex.CircleSegment;
+import de.westranger.geometry.common.math.Vector2D;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

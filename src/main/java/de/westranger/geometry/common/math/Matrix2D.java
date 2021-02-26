@@ -1,6 +1,4 @@
-package de.westranger.geometry.common;
-
-import java.util.Arrays;
+package de.westranger.geometry.common.math;
 
 public final class Matrix2D {
     protected final double[][] data;
