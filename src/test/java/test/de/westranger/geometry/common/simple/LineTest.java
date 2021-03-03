@@ -39,7 +39,7 @@ class LineTest {
 
         // -0.5x+7
         final Point2D pt21 = new Point2D(2.0, 6.0);
-        final Point2D pt22 = new Point2D(4.0, 3.0);
+        final Point2D pt22 = new Point2D(4.0, 5.0);
 
         final Line l1 = new Line(pt11, pt12);
         final Line l2 = new Line(pt21, pt22);
@@ -47,7 +47,9 @@ class LineTest {
         final OptionalDouble intersection = l1.intersection(l2);
         assertTrue(intersection.isPresent());
 
-        final Vector2D result = l1.getPositionVector().lerp(1.0+intersection.getAsDouble());
+        assertEquals(-0.2,intersection.getAsDouble(),1e-10);
+
+        final Vector2D result = l1.getPositionVector().add(l1.getDirectionVector().lerp(intersection.getAsDouble()));
         assertEquals(1.6, result.getX(), 1e-10);
         assertEquals(6.2, result.getY(), 1e-10);
     }

@@ -29,7 +29,7 @@ public final class Line extends Geometry {
         final double denominator = r.cross(s);
 
         if (Math.abs(numerator) < 1e-10 && Math.abs(denominator) < 1e-10) {
-            // colinear see link für detail whenever we want to return information about colinearity
+            // colinear see link for detail whenever we want to return information about colinearity
             return OptionalDouble.of(Double.POSITIVE_INFINITY);
         } else if (Math.abs(denominator) < 1e-10) {
             // parallel
