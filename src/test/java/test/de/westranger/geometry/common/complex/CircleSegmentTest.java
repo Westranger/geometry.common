@@ -1,4 +1,4 @@
-package test.de.westranger.geometry.common;
+package test.de.westranger.geometry.common.complex;
 
 import de.westranger.geometry.common.complex.CircleSegment;
 import de.westranger.geometry.common.math.Vector2D;

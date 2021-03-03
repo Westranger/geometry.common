@@ -1,6 +1,6 @@
 package de.westranger.geometry.common.math;
 
-public final class Matrix2D {
+public class Matrix2D {
     protected final double[][] data;
 
     public Matrix2D(final double a11, final double a12, final double a21, final double a22) {
@@ -24,7 +24,7 @@ public final class Matrix2D {
 
         this.data = new double[2][2];
         for (int i = 0; i < 2; i++) {
-            System.arraycopy(this.data[i], 0, data[i], 0, 2);
+            System.arraycopy(data[i], 0, this.data[i], 0, 2);
         }
     }
 
@@ -50,8 +50,11 @@ public final class Matrix2D {
     }
 
     public Matrix2D multiply(Matrix2D matrix) {
-        throw new RuntimeException("not yet implemented");
-        //return null;
+        final double a11 = this.data[0][0] * matrix.getValue(0, 0) + this.data[0][1] * matrix.getValue(1, 0);
+        final double a12 = this.data[0][0] * matrix.getValue(0, 1) + this.data[0][1] * matrix.getValue(1, 1);
+        final double a21 = this.data[1][0] * matrix.getValue(0, 0) + this.data[1][1] * matrix.getValue(1, 0);
+        final double a22 = this.data[1][0] * matrix.getValue(0, 1) + this.data[1][1] * matrix.getValue(1, 1);
+        return new Matrix2D(a11, a12, a21, a22);
     }
 
     public Vector2D multiply(Vector2D vector) {
@@ -59,8 +62,7 @@ public final class Matrix2D {
     }
 
     public Matrix2D transpose() {
-        final double[][] matrixParams = {{this.data[0][0], this.data[1][0]}, {this.data[0][1], this.data[1][1]}};
-        return new Matrix2D(matrixParams);
+        return new Matrix2D(this.data[0][0], this.data[1][0], this.data[0][1], this.data[1][1]);
     }
 
     public double det() {

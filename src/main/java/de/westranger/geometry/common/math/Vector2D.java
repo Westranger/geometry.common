@@ -44,6 +44,12 @@ public final class Vector2D {
         return this;
     }
 
+    /**
+     * The cross product of 2D vectors results in a 3D vector with only a z component.
+     *
+     * @param vec
+     * @return This function returns the magnitude of the z value.
+     */
     public double cross(final Vector2D vec) {
         return this.x * vec.getY() - this.y * vec.getX();
     }
