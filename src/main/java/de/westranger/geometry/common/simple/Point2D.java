@@ -12,7 +12,7 @@ public final class Point2D {
     }
 
     public Point2D pointAt(final double angle, final double distance) {
-        return new Point2D(this.x + Math.sin(angle) * distance, this.y + Math.sin(angle) * distance);
+        return new Point2D(this.x + Math.cos(angle) * distance, this.y + Math.sin(angle) * distance);
     }
 
     public Point2D pointAt(final Vector2D vec) {
@@ -21,6 +21,10 @@ public final class Point2D {
 
     public Vector2D diff(final Point2D point) {
         return new Vector2D(point.getX() - this.x, point.getY() - this.y);
+    }
+
+    public double distance(final Point2D point) {
+        return this.diff(point).norm();
     }
 
     public double getX() {

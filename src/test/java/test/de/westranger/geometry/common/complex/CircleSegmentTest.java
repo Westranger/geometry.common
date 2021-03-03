@@ -1,7 +1,7 @@
 package test.de.westranger.geometry.common.complex;
 
 import de.westranger.geometry.common.complex.CircleSegment;
-import de.westranger.geometry.common.math.Vector2D;
+import de.westranger.geometry.common.simple.Point2D;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,20 +9,19 @@ class CircleSegmentTest {
 
     @org.junit.jupiter.api.Test
     void setRadiusAndMarginCW() {
-        Vector2D p1 = new Vector2D(0.0, 0.0);
-        Vector2D p2 = new Vector2D(0.0, 100.0); // 100
-        Vector2D p3 = new Vector2D(200.0, 100.0); // 200
-        Vector2D p4 = new Vector2D(200.0, -200.0); // 300
-        Vector2D p5 = new Vector2D(-200.0, -200.0); // 400
-        Vector2D p6 = new Vector2D(-200.0, 300.0); // 500
+        Point2D p1 = new Point2D(0.0, 0.0);
+        Point2D p2 = new Point2D(0.0, 100.0); // 100
+        Point2D p3 = new Point2D(200.0, 100.0); // 200
+        Point2D p4 = new Point2D(200.0, -200.0); // 300
+        Point2D p5 = new Point2D(-200.0, -200.0); // 400
+        Point2D p6 = new Point2D(-200.0, 300.0); // 500
 
-        double radius = 50.0;
-        double margin = 10.0;
+        final double radius = 50.0;
 
-        CircleSegment cs1 = new CircleSegment(p1, p2, p3, radius, margin);
-        CircleSegment cs2 = new CircleSegment(p2, p3, p4, radius, margin);
-        CircleSegment cs3 = new CircleSegment(p3, p4, p5, radius, margin);
-        CircleSegment cs4 = new CircleSegment(p4, p5, p6, radius, margin);
+        CircleSegment cs1 = new CircleSegment(p1, p2, p3, radius);
+        CircleSegment cs2 = new CircleSegment(p2, p3, p4, radius);
+        CircleSegment cs3 = new CircleSegment(p3, p4, p5, radius);
+        CircleSegment cs4 = new CircleSegment(p4, p5, p6, radius);
 
         assertEquals(-Math.PI * 0.5, cs1.getCenterCircle().getArcLength(), 1e-10);
         assertEquals(Math.PI, cs1.getCenterCircle().getArcStartAngle(), 1e-10);
@@ -64,20 +63,19 @@ class CircleSegmentTest {
 
     @org.junit.jupiter.api.Test
     void setRadiusAndMarginCCW() {
-        Vector2D p1 = new Vector2D(-200.0, 300.0); // 500
-        Vector2D p2 = new Vector2D(-200.0, -100.0); // 400
-        Vector2D p3 = new Vector2D(200.0, -100.0); // 300
-        Vector2D p4 = new Vector2D(200.0, 100.0); // 200
-        Vector2D p5 = new Vector2D(0.0, 100.0); // 100
-        Vector2D p6 = new Vector2D(0.0, 0.0);
+        Point2D p1 = new Point2D(-200.0, 300.0); // 500
+        Point2D p2 = new Point2D(-200.0, -100.0); // 400
+        Point2D p3 = new Point2D(200.0, -100.0); // 300
+        Point2D p4 = new Point2D(200.0, 100.0); // 200
+        Point2D p5 = new Point2D(0.0, 100.0); // 100
+        Point2D p6 = new Point2D(0.0, 0.0);
 
-        double radius = 50.0;
-        double margin = 10.0;
+        final double radius = 50.0;
 
-        CircleSegment cs1 = new CircleSegment(p1, p2, p3, radius, margin);
-        CircleSegment cs2 = new CircleSegment(p2, p3, p4, radius, margin);
-        CircleSegment cs3 = new CircleSegment(p3, p4, p5, radius, margin);
-        CircleSegment cs4 = new CircleSegment(p4, p5, p6, radius, margin);
+        CircleSegment cs1 = new CircleSegment(p1, p2, p3, radius);
+        CircleSegment cs2 = new CircleSegment(p2, p3, p4, radius);
+        CircleSegment cs3 = new CircleSegment(p3, p4, p5, radius);
+        CircleSegment cs4 = new CircleSegment(p4, p5, p6, radius);
 
         assertEquals(Math.PI * 0.5, cs1.getCenterCircle().getArcLength(), 1e-10);
         assertEquals(Math.PI, cs1.getCenterCircle().getArcStartAngle(), 1e-10);

@@ -1,9 +1,33 @@
 package de.westranger.geometry.common.simple;
 
-import de.westranger.geometry.common.math.Vector2D;
-
 public class ArcCircle extends Circle {
-    public ArcCircle(Vector2D center, Vector2D arcStart, Vector2D arcEnd, double arcStartAngle, double arcLength, double radius) {
-        super(center, arcStart, arcEnd, arcStartAngle, arcLength, radius);
+
+    private final Point2D arcStart;
+    private final Point2D arcEnd;
+    private final double arcStartAngle;
+    private final double arcLength;
+
+    public ArcCircle(final Point2D center, final Point2D arcStart, final Point2D arcEnd, final double arcStartAngle, final double arcLength, final double radius) {
+        super(center, radius);
+        this.arcStart = arcStart;
+        this.arcEnd = arcEnd;
+        this.arcStartAngle = arcStartAngle;
+        this.arcLength = arcLength;
+    }
+
+    public Point2D getArcStart() {
+        return arcStart;
+    }
+
+    public Point2D getArcEnd() {
+        return arcEnd;
+    }
+
+    public double getArcStartAngle() {
+        return arcStartAngle;
+    }
+
+    public double getArcLength() {
+        return arcLength;
     }
 }

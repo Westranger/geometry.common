@@ -2,6 +2,7 @@ package de.westranger.geometry.common.simple;
 
 import de.westranger.geometry.common.math.Vector2D;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
@@ -23,10 +24,8 @@ public final class Line extends Geometry {
     // https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
     // https://github.com/pgkelley4/line-segments-intersect/blob/master/js/line-segments-intersect.js
     public OptionalDouble intersection(final Line line) {
-        final Vector2D r = this.directionVector;
-        final Vector2D s = line.directionVector;
-        final double numerator = line.getPositionVector().subtract(this.positionVector).cross(r);
-        final double denominator = r.cross(s);
+        final double numerator = line.getPositionVector().subtract(this.positionVector).cross(this.directionVector);
+        final double denominator = this.directionVector.cross(line.directionVector);
 
         if (Math.abs(numerator) < 1e-10 && Math.abs(denominator) < 1e-10) {
             // colinear see link for detail whenever we want to return information about colinearity
@@ -37,28 +36,59 @@ public final class Line extends Geometry {
         }
 
         //final double u = numerator / denominator;
-        final double t = line.getPositionVector().subtract(this.positionVector).cross(s) / denominator;
+        final double t = line.getPositionVector().subtract(this.positionVector).cross(line.directionVector) / denominator;
         return OptionalDouble.of(t);
     }
 
     public Point2D getClosestPointOnLine(final Point2D point) {
-        throw new RuntimeException("Not Yet Implemented");
+        final Line line = new Line(new Vector2D(point.getX(), point.getY()), this.directionVector.turn90DegreeClockwise());
+        final OptionalDouble intersection = this.intersection(line);
+        final Vector2D result = this.positionVector.add(this.directionVector.lerp(intersection.getAsDouble()));
+        return new Point2D(result.getX(), result.getY());
     }
 
     public Optional<List<Point2D>> intersection(final Circle circle) {
-        throw new RuntimeException("Not Yet Implemented");
+        final Point2D intersection = this.getClosestPointOnLine(circle.getCenter());
+        final double dist = intersection.distance(circle.getCenter());
+        if (Math.abs(dist - circle.getRadius()) < 1e-10) {
+            final List<Point2D> result = new LinkedList<>();
+            result.add(intersection);
+            return Optional.of(result);
+        } else if (dist < circle.getRadius()) {
+            // we have two points
+            final double adjacentLeg = Math.sqrt(circle.getRadius() * circle.getRadius() - dist * dist);
+            final Point2D pt1 = intersection.pointAt(this.directionVector.angle(), adjacentLeg);
+            final Point2D pt2 = intersection.pointAt(this.directionVector.angle() + Math.PI, adjacentLeg);
+
+            final List<Point2D> result = new LinkedList<>();
+            result.add(pt1);
+            result.add(pt2);
+            return Optional.of(result);
+        }
+        return Optional.empty();
     }
 
     public Optional<List<Point2D>> intersection(final ArcCircle arc) {
-        throw new RuntimeException("Not Yet Implemented");
-    }
+        final Optional<List<Point2D>> intersection = this.intersection((Circle) arc);
 
-    public Optional<List<Point2D>> intersection(final Ellipse elipse) {
-        throw new RuntimeException("Not Yet Implemented");
-    }
+        if (intersection.isEmpty()) {
+            return intersection;
+        }
+        final List<Point2D> result = new LinkedList<>();
+        final Vector2D directionStart = arc.getCenter().diff(arc.getArcStart());
+        for (Point2D pt : intersection.get()) {
+            final Vector2D directionPt = arc.getCenter().diff(pt);
+            final double angleBetween = directionStart.angleBetweenSinged(directionPt);
+            if (arc.getArcLength() > angleBetween && angleBetween >= 0.0 || arc.getArcLength() < angleBetween && angleBetween < 0.0) {
+                result.add(pt);
+            }
+        }
 
-    public Optional<List<Point2D>> intersection(final ArcEllipse arc) {
-        throw new RuntimeException("Not Yet Implemented");
+        if (result.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(result);
     }
 
     public Vector2D getPositionVector() {

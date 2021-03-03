@@ -58,6 +58,10 @@ public final class Vector2D {
         return Math.acos(this.dot(vec) / (this.norm() * vec.norm()));
     }
 
+    public double angleBetweenSinged(final Vector2D vec) {
+        return Math.atan2(vec.getY(), vec.getX()) - Math.atan2(this.y, this.x);
+    }
+
     public double angle() {
         return Math.atan2(this.y, this.x);
     }
