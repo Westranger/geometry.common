@@ -1,47 +1,76 @@
 package de.westranger.geometry.common.simple;
 
-import de.westranger.geometry.common.math.Vector2D;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-
 public class Circle extends Geometry {
     protected final Point2D center;
     protected final double radius;
 
     public Circle(final Point2D center, final double radius) {
+        if (center == null) {
+            throw new IllegalArgumentException("radius center point must not be null");
+        }
+
+        if (radius < Double.MIN_VALUE) {
+            throw new IllegalArgumentException("radius of the circle is smaller than " + Double.MIN_VALUE);
+        }
+
+        this.checkValueValidity(radius);
+        this.checkValueValidity(center.getX());
+        this.checkValueValidity(center.getY());
+
         this.center = center;
         this.radius = radius;
     }
 
-    public Optional<List<Point2D>> intersection(final Circle circle) {
-        // https://stackoverflow.com/questions/3349125/circle-circle-intersection-points#:~:text=Intersection%20of%20two%20circles&text=The%20aim%20is%20to%20find,solutions%2C%20the%20circles%20are%20separate.
+    // TODO create circle form 3 Points
+    public Circle(final Point2D p1, final Point2D p2, final Point2D p3) {
+        this(p1, 0.0); // TODO refactor, was just here to make the compiler happy
+        /*
 
-        final double dist = this.center.distance(circle.getCenter());
+namespace
+{
+bool areLinearlyDependent(const Eigen::Vector2d& a, const Eigen::Vector2d& b)
+{
+  ROS_ASSERT(std::abs(a.norm() - 1.) <
+                 Eigen::NumTraits<double>::dummy_precision() ||
+             a.norm() < Eigen::NumTraits<double>::dummy_precision());
+  ROS_ASSERT(std::abs(b.norm() - 1.) <
+                 Eigen::NumTraits<double>::dummy_precision() ||
+             b.norm() < Eigen::NumTraits<double>::dummy_precision());
+  return std::abs(a.dot(Eigen::Rotation2Dd(M_PI_2) * b)) <
+         Eigen::NumTraits<double>::dummy_precision();
+}
 
-        if (dist > this.radius + circle.getRadius() || dist < Math.abs(this.radius - circle.getRadius()) || dist <= 1e-10 && this.radius - circle.getRadius() <= 1e-10) {
-            return Optional.empty();
-        }
+geometry::Circle computeCircleFromThreePoints(const Eigen::Vector2d& p1,
+                                              const Eigen::Vector2d& p2,
+                                              const Eigen::Vector2d& p3)
+{
+  const Eigen::Hyperplane<double, 2> perpendicular_bisector_p1_p2(
+      (p1 - p2).normalized(), (p1 + p2) / 2.);
+  const Eigen::Hyperplane<double, 2> perpendicular_bisector_p2_p3(
+      (p2 - p3).normalized(), (p2 + p3) / 2.);
 
-        final double a = (this.radius * this.radius - circle.getRadius() * circle.getRadius() + dist * dist) / (2.0 * dist);
-        final double h = Math.sqrt(this.radius * this.radius - a * a);
-        final Vector2D p2 = toVector(this.center).add(toVector(circle.getCenter()).subtract(toVector(this.center)).multiply(a).multiply(1.0 / dist));
-        final double x31 = p2.getX() + h * (circle.getCenter().getY() - this.center.getY()) / dist;
-        final double y31 = p2.getY() - h * (circle.getCenter().getX() - this.center.getX()) / dist;
-        final double x32 = p2.getX() - h * (circle.getCenter().getY() - this.center.getY()) / dist;
-        final double y32 = p2.getY() + h * (circle.getCenter().getX() - this.center.getX()) / dist;
-        final Point2D resA = new Point2D(x31, y31);
-        final Point2D resB = new Point2D(x32, y32);
+  if (areLinearlyDependent(perpendicular_bisector_p1_p2.normal(),
+                           perpendicular_bisector_p2_p3.normal()))
+  {
+    return geometry::Circle(Eigen::Vector2d(0.0, 0.0),
+                            std::numeric_limits<double>::infinity());
+  }
 
-        final List<Point2D> result = new LinkedList<>();
-        if (resA.distance(resB) > 1e-10) {
-            result.add(resB);
-        }
+  const Eigen::Vector2d center =
+      perpendicular_bisector_p1_p2.intersection(perpendicular_bisector_p2_p3);
+  const double radius = (center - p1).norm();
 
-        result.add(resA);
-        return Optional.of(result);
+  return geometry::Circle(center, radius);
+}
+}  // namespace
+
+geometry::Circle::Circle(const Eigen::Vector2d& p1, const Eigen::Vector2d& p2,
+                         const Eigen::Vector2d& p3)
+  : Circle(computeCircleFromThreePoints(p1, p2, p3)){};
+
+         */
     }
+
 
     public Point2D getCenter() {
         return center;
@@ -51,7 +80,9 @@ public class Circle extends Geometry {
         return radius;
     }
 
-    private Vector2D toVector(final Point2D point) {
-        return new Vector2D(point.getX(), point.getY());
+    @Override
+    public BoundingBox getBoundingBox() {
+        return new BoundingBox(new Point2D(this.center.getX() - this.radius, this.center.getY() - this.radius), new Point2D(this.center.getX() + this.radius, this.center.getY() + this.radius));
     }
 }
+

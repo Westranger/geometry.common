@@ -162,4 +162,14 @@ public final class Vector2DTest {
         assertEquals("(x=1.0 y=2.0)",vecA.toString());
     }
 
+    @Test
+    void testAngleBetweenSigned(){
+        final Vector2D vecA = new Vector2D(3.0,3.0);
+        final Vector2D vecB = new Vector2D(-3.0,3.0);
+        final Vector2D vecC = new Vector2D(3.0,-3.0);
+
+        assertEquals(Math.PI*0.5,vecA.angleBetweenSinged(vecB),1e-10);
+        assertEquals(-Math.PI*0.5,vecA.angleBetweenSinged(vecC),1e-10);
+    }
+
 }

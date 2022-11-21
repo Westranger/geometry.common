@@ -21,6 +21,11 @@
       <version>5.7.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jfree</groupId>
+      <artifactId>org.jfree.svg</artifactId>
+      <version>5.0</version>
+    </dependency>
   </dependencies>
 
   <reporting>

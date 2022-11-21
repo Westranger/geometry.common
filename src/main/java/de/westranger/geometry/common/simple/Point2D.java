@@ -2,11 +2,15 @@ package de.westranger.geometry.common.simple;
 
 import de.westranger.geometry.common.math.Vector2D;
 
-public final class Point2D {
+public final class Point2D implements Comparable<Point2D> {
     private final double x;
     private final double y;
 
     public Point2D(final double x, final double y) {
+        super();
+        if (Double.isNaN(x) || Double.isNaN(y)) {
+            throw new ArithmeticException("Point2D components mut not be Nan x= " + x + " y=" + y);
+        }
         this.x = x;
         this.y = y;
     }
@@ -34,4 +38,26 @@ public final class Point2D {
     public double getY() {
         return y;
     }
+
+    public Vector2D toVector2D() {
+        return new Vector2D(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "Punkt(" + this.x + "," + this.y + ")";
+    }
+
+    @Override
+    public int compareTo(final Point2D o) {
+        return (int) (((this.getX() - o.getX()) + (this.getY() - o.getY())) * 1e5);
+    }
+
+    public static double angleBetween(final Point2D p1, final Point2D p2, final Point2D p3) {
+        final Vector2D v1 = p2.diff(p1);
+        final Vector2D v2 = p2.diff(p3);
+        return v1.angleBetween(v2);
+    }
+
+
 }

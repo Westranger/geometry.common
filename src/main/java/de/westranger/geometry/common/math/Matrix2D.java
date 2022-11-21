@@ -68,4 +68,9 @@ public class Matrix2D {
     public double det() {
         return this.data[0][0] * this.data[1][1] - this.data[0][1] * this.data[1][0];
     }
+
+    public double trace() {
+        return this.data[0][0] + this.data[1][1];
+    }
+
 }

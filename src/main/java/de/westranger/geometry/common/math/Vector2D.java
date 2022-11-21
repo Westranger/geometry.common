@@ -5,6 +5,11 @@ public final class Vector2D {
     private double y;
 
     public Vector2D(final double x, final double y) {
+        // TODO testcase schreiben
+        if (Double.isNaN(x) || Double.isNaN(y)) {
+            throw new ArithmeticException("Vector 2D components mut not be Nan x= " + x + " y=" + y);
+        }
+
         this.x = x;
         this.y = y;
     }
