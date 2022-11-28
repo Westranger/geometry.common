@@ -159,17 +159,34 @@ public final class Vector2DTest {
     @Test
     void testToString() {
         final Vector2D vecA = new Vector2D(1.0, 2.0);
-        assertEquals("(x=1.0 y=2.0)",vecA.toString());
+        assertEquals("(x=1.0 y=2.0)", vecA.toString());
     }
 
     @Test
-    void testAngleBetweenSigned(){
-        final Vector2D vecA = new Vector2D(3.0,3.0);
-        final Vector2D vecB = new Vector2D(-3.0,3.0);
-        final Vector2D vecC = new Vector2D(3.0,-3.0);
+    void testAngleBetweenSigned() {
+        final Vector2D vecA = new Vector2D(3.0, 3.0);
+        final Vector2D vecB = new Vector2D(-3.0, 3.0);
+        final Vector2D vecC = new Vector2D(3.0, -3.0);
+        final Vector2D vecD = new Vector2D(-3.0, -3.0);
 
-        assertEquals(Math.PI*0.5,vecA.angleBetweenSinged(vecB),1e-10);
-        assertEquals(-Math.PI*0.5,vecA.angleBetweenSinged(vecC),1e-10);
+        assertEquals(Math.PI * 0.5, vecA.angleBetweenSinged(vecB), 1e-10);
+        assertEquals(-Math.PI * 0.5, vecA.angleBetweenSinged(vecC), 1e-10);
+        assertEquals(Math.PI, vecA.angleBetweenSinged(vecD), 1e-10);
+
+        assertEquals(-Math.PI * 0.5, vecB.angleBetweenSinged(vecA), 1e-10);
+        assertEquals(Math.PI, vecB.angleBetweenSinged(vecC), 1e-10);
+        assertEquals(Math.PI * 0.5, vecB.angleBetweenSinged(vecD), 1e-10);
+
+        assertEquals(Math.PI * 0.5, vecC.angleBetweenSinged(vecA), 1e-10);
+        assertEquals(Math.PI, vecC.angleBetweenSinged(vecB), 1e-10);
+        assertEquals(-Math.PI * 0.5, vecC.angleBetweenSinged(vecD), 1e-10);
+
+        assertEquals(Math.PI, vecD.angleBetweenSinged(vecA), 1e-10);
+        assertEquals(-Math.PI * 0.5, vecD.angleBetweenSinged(vecB), 1e-10);
+        assertEquals(Math.PI * 0.5, vecD.angleBetweenSinged(vecC), 1e-10);
+
+        final Vector2D vecE = new Vector2D(-Math.cos(Math.toRadians(46.0)), -Math.sin(Math.toRadians(46.0)));
+        assertEquals(-Math.PI + Math.toRadians(1.0), vecA.angleBetweenSinged(vecE), 1e-10);
     }
 
 }

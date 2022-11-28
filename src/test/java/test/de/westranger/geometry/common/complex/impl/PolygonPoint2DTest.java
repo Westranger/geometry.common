@@ -54,4 +54,37 @@ class PolygonPoint2DTest {
         poly.add(new Point2D(1.0, 2.0));
         assertEquals(0.0, poly.areaSigned(), 1e-10);
     }
+
+    @Test
+    void windingSignedCounterClockwise() {
+        PolygonPoint2D poly = new PolygonPoint2D();
+
+        poly.add(new Point2D(1.0, 1.0));
+        poly.add(new Point2D(1.0, 2.0));
+        poly.add(new Point2D(2.0, 2.0));
+        poly.add(new Point2D(2.0, 1.0));
+
+        Point2D ptA = new Point2D(0.0,0.0);
+        assertEquals(0, poly.windingNumber(ptA), 1e-10);
+
+        Point2D ptB = new Point2D(1.5,1.5);
+        assertEquals(-1, poly.windingNumber(ptB), 1e-10);
+    }
+
+    @Test
+    void windingSignedClockwise() {
+        PolygonPoint2D poly = new PolygonPoint2D();
+
+        poly.add(new Point2D(1.0, 1.0));
+        poly.add(new Point2D(2.0, 1.0));
+        poly.add(new Point2D(2.0, 2.0));
+        poly.add(new Point2D(1.0, 2.0));
+
+        Point2D ptA = new Point2D(0.0,0.0);
+        assertEquals(0, poly.windingNumber(ptA), 1e-10);
+
+        Point2D ptB = new Point2D(1.5,1.5);
+        assertEquals(1, poly.windingNumber(ptB), 1e-10);
+    }
+
 }

@@ -16,6 +16,8 @@ public interface Polygon {
 
     boolean isWithin(final Point2D point);
 
+    int windingNumber(final Point2D pt);
+
     // TODO eigene funktion schreiben, die entlang der outline geht und schaut, obt es intersections mit einem anderen segment und liegt dieses segment innerhalb oder ausserhalb des polygons
     double areaSigned();
 }

@@ -63,8 +63,13 @@ public final class Vector2D {
         return Math.acos(this.dot(vec) / (this.norm() * vec.norm()));
     }
 
+    /**
+     * @param vec
+     * @return
+     * @see <a href="https://stackoverflow.com/questions/5188561/signed-angle-between-two-3d-vectors-with-same-origin-within-the-same-plane">Signed angle between two 3D vectors with same origin within the same plane</a>
+     */
     public double angleBetweenSinged(final Vector2D vec) {
-        return Math.atan2(vec.getY(), vec.getX()) - Math.atan2(this.y, this.x);
+        return Math.atan2(this.cross(vec), this.dot(vec));
     }
 
     public double angle() {
