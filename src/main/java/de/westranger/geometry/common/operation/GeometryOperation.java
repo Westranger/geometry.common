@@ -16,10 +16,14 @@ public final class GeometryOperation {
             return new GeometryResult<>(l1);
         } else {
             final Vector2D vec = l1.getPositionVector().add(l1.getDirectionVector().lerp(inter.getAsDouble()));
-            final List<Point2D> lst = new LinkedList<>();
+            final List<Point2D> lst = new ArrayList<>(1);
             lst.add(new Point2D(vec.getX(), vec.getY()));
             return new GeometryResult<>(Collections.unmodifiableList(lst));
         }
+    }
+
+    public static GeometryResult<Line> intersection(final Line l1, final Segment s1) {
+        return null;
     }
 
     public static PointResult intersection(final Line l1, final Circle c1) {
@@ -79,7 +83,46 @@ public final class GeometryOperation {
     }
 
     public static GeometryResult<Segment> intersection(final Segment s1, final Segment s2) {
-        return null;
+        final OptionalDouble intersection = s1.computeIntersection(s2);
+
+        if (intersection.isPresent()) {
+            final double intersectionValue = intersection.getAsDouble();
+            if (Double.isFinite(intersectionValue)) {
+                // normal case
+                if (intersectionValue >= 0.0 && intersectionValue <= 1.0) {
+                    // we have a valid intersection on the segments
+                    final Vector2D vec = s1.getPositionVector().add(s1.getDirectionVector().lerp(intersectionValue));
+                    final List<Point2D> lst = new ArrayList<>(1);
+                    lst.add(new Point2D(vec.getX(), vec.getY()));
+                    return new GeometryResult<>(Collections.unmodifiableList(lst));
+                } // else the intersection is not on the segments
+            } else {
+                // we need to return a segment or maybe not
+                final Vector2D diffS1StartS2Start = s2.getStart().toVector2D().subtract(s1.getStart().toVector2D());
+                final Vector2D diffS1StartS2End = s2.getEnd().toVector2D().subtract(s1.getStart().toVector2D());
+                final Vector2D directionS1 = s1.getDirectionVector();
+                final double tS1S2Start = Math.abs(directionS1.getX()) < 1e-10 ? diffS1StartS2Start.getY() / directionS1.getY() : diffS1StartS2Start.getX() / directionS1.getX();
+                final double tS1S2End = Math.abs(directionS1.getX()) < 1e-10 ? diffS1StartS2End.getY() / directionS1.getY() : diffS1StartS2End.getX() / directionS1.getX();
+
+                if (tS1S2Start >= 0.0 && tS1S2Start <= 1.0) {
+                    if (tS1S2End >= 0.0 && tS1S2End <= 1.0) {
+                        return new GeometryResult<>(new Segment(s2.getStart(), s2.getEnd()));
+                    } else if (tS1S2End < 0.0) {
+                        return new GeometryResult<>(new Segment(s2.getStart(), s1.getStart()));
+                    } else if (tS1S2End > 1.0) {
+                        return new GeometryResult<>(new Segment(s2.getStart(), s1.getEnd()));
+                    }
+                } else if (tS1S2End >= 0.0 && tS1S2End <= 1.0) {
+                    if (tS1S2Start < 0.0) {
+                        return new GeometryResult<>(new Segment(s2.getEnd(), s1.getStart()));
+                    } else if (tS1S2Start > 1.0) {
+                        return new GeometryResult<>(new Segment(s2.getEnd(), s1.getEnd()));
+                    }
+                }
+            }
+        }
+
+        return new GeometryResult<>();
     }
 
     public static PointResult intersection(final Segment s1, final Circle c1) {
