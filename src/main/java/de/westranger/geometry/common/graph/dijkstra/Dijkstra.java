@@ -4,7 +4,7 @@ import de.westranger.geometry.common.graph.Graph;
 
 public class Dijkstra<T extends Comparable<T>, G extends Comparable<G>> {
 
-    private final Graph<T, G> graph;
+    protected final Graph<T, G> graph;
 
     public Dijkstra(final Graph<T, G> graph) {
         this.graph = graph;

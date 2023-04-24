@@ -2,6 +2,8 @@ package de.westranger.geometry.common.simple;
 
 import de.westranger.geometry.common.math.Vector2D;
 
+import java.util.Objects;
+
 public final class Point2D implements Comparable<Point2D> {
     private final double x;
     private final double y;
@@ -59,5 +61,16 @@ public final class Point2D implements Comparable<Point2D> {
         return v1.angleBetween(v2);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Point2D point2D = (Point2D) o;
+        return Double.compare(point2D.x, x) == 0 && Double.compare(point2D.y, y) == 0;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
 }

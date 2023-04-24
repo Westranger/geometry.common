@@ -222,8 +222,8 @@ public final class GeometryOperation {
         }
 
         final double dist = c1.getCenter().distance(c2.getCenter());
-        final double alpha = (Math.PI * 0.5) - Math.asin(Math.abs(c1.getRadius() - c2.getRadius()) / dist);
-        final double beta = (Math.PI * 0.5) - Math.asin((c1.getRadius() + c2.getRadius()) / dist);
+        final double alpha = Math.PI * 0.5 - Math.asin(Math.abs(c1.getRadius() - c2.getRadius()) / dist);
+        final double beta = Math.PI * 0.5 - Math.asin((c1.getRadius() + c2.getRadius()) / dist);
         double angle = c1.getCenter().diff(c2.getCenter()).angle();
 
         Circle tmpA, tmpB;

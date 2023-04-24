@@ -3,6 +3,7 @@ package de.westranger.geometry.common.graph.astar;
 import de.westranger.geometry.common.graph.Edge;
 import de.westranger.geometry.common.graph.Graph;
 
+import java.io.Serializable;
 import java.util.*;
 
 public final class AStar<T extends Comparable<T>, G extends Comparable<G>> {
@@ -28,7 +29,7 @@ public final class AStar<T extends Comparable<T>, G extends Comparable<G>> {
         }
     }
 
-    private static final class CostVertexTupleComparator implements Comparator<CostVertexTuple> {
+    private static final class CostVertexTupleComparator implements Comparator<CostVertexTuple>, Serializable {
         @Override
         public int compare(final CostVertexTuple o1, final CostVertexTuple o2) {
             return (int) ((o1.cost - o2.cost) * 1e6);

@@ -22,7 +22,7 @@ public class Circle extends Geometry {
     }
 
     // TODO create circle form 3 Points
-    public Circle(final Point2D p1, final Point2D p2, final Point2D p3) {
+    public Circle(final Point2D p1/*, final Point2D p2, final Point2D p3*/) {
         this(p1, 0.0); // TODO refactor, was just here to make the compiler happy
         /*
 

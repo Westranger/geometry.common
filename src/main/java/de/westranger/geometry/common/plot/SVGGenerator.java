@@ -15,7 +15,7 @@ import java.io.IOException;
 public final class SVGGenerator {
 
     private final SVGGraphics2D svgGenerator;
-    final double scaleFactor = 100.0;
+    final static double SCALE_FACTOR = 100.0;
     BoundingBox viewBox;
 
     public SVGGenerator(final double width, final double height) {
@@ -28,7 +28,7 @@ public final class SVGGenerator {
     public void add(Point2D point, Colors color, final double radius) {
         final double ws = radius * 0.5;
         this.svgGenerator.setPaint(Color.decode(color.getColor()));
-        this.svgGenerator.fillOval((int) ((point.getX() - ws) * this.scaleFactor), (int) ((point.getY() - ws) * this.scaleFactor), (int) (radius * this.scaleFactor), (int) (radius * this.scaleFactor));
+        this.svgGenerator.fillOval((int) ((point.getX() - ws) * SCALE_FACTOR), (int) ((point.getY() - ws) * SCALE_FACTOR), (int) (radius * SCALE_FACTOR), (int) (radius * SCALE_FACTOR));
 
         final BoundingBox bBox = new BoundingBox(point, point);
         if (!bBox.isInfinite()) {
@@ -41,9 +41,8 @@ public final class SVGGenerator {
     }
 
     public void add(final Circle circle, final Colors color, final double widthStroke) {
-        final double ws = widthStroke * 0.5 * this.scaleFactor;
         this.svgGenerator.setPaint(Color.decode(color.getColor()));
-        this.svgGenerator.drawOval((int) ((circle.getCenter().getX() - circle.getRadius()) * this.scaleFactor), (int) ((circle.getCenter().getY() - circle.getRadius()) * this.scaleFactor), (int) (circle.getRadius() * 2.0 * this.scaleFactor), (int) (circle.getRadius() * 2.0 * this.scaleFactor));
+        this.svgGenerator.drawOval((int) ((circle.getCenter().getX() - circle.getRadius()) * SCALE_FACTOR), (int) ((circle.getCenter().getY() - circle.getRadius()) * SCALE_FACTOR), (int) (circle.getRadius() * 2.0 * SCALE_FACTOR), (int) (circle.getRadius() * 2.0 * SCALE_FACTOR));
         this.add(circle.getCenter(), color, widthStroke);
 
         final BoundingBox bBox = circle.getBoundingBox();
@@ -53,9 +52,8 @@ public final class SVGGenerator {
     }
 
     public void add(final Segment segment, final Colors color, final double widthStroke) {
-        final double ws = widthStroke * 0.5 * this.scaleFactor;
         this.svgGenerator.setPaint(Color.decode(color.getColor()));
-        this.svgGenerator.drawLine((int) (segment.getStart().getX() * this.scaleFactor), (int) (segment.getStart().getY() * this.scaleFactor), (int) (segment.getEnd().getX() * this.scaleFactor), (int) (segment.getEnd().getY() * this.scaleFactor));
+        this.svgGenerator.drawLine((int) (segment.getStart().getX() * SCALE_FACTOR), (int) (segment.getStart().getY() * SCALE_FACTOR), (int) (segment.getEnd().getX() * SCALE_FACTOR), (int) (segment.getEnd().getY() * SCALE_FACTOR));
         this.add(segment.getStart(), color, widthStroke);
         this.add(segment.getEnd(), color, widthStroke);
 
@@ -70,10 +68,10 @@ public final class SVGGenerator {
     }
 
     public void writeFile(final String filename) {
-        final double minX = this.viewBox.getMin().getX() * this.scaleFactor;
-        final double minY = this.viewBox.getMin().getY() * this.scaleFactor;
-        final double width = (this.viewBox.getMax().getX() - this.viewBox.getMin().getX()) * this.scaleFactor;
-        final double height = (this.viewBox.getMax().getY() - this.viewBox.getMin().getY()) * this.scaleFactor;
+        final double minX = this.viewBox.getMin().getX() * SCALE_FACTOR;
+        final double minY = this.viewBox.getMin().getY() * SCALE_FACTOR;
+        final double width = (this.viewBox.getMax().getX() - this.viewBox.getMin().getX()) * SCALE_FACTOR;
+        final double height = (this.viewBox.getMax().getY() - this.viewBox.getMin().getY()) * SCALE_FACTOR;
         final String elem = this.svgGenerator.getSVGElement(null, true, new ViewBox(minX, minY, width, height), null, MeetOrSlice.MEET);
 
         try {
