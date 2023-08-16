@@ -30,7 +30,7 @@ class AStarTest {
         edges = graph.removeEdgesContaining(14);
         assertEquals(4, edges.size());
 
-        final AStar<Point2D, Double> astar = new AStar(graph, new EuclideanHeuristic());
+        final AStar<Point2D, Double> astar = new AStar<>(graph, new EuclideanHeuristic());
 
         final List<Integer> computedPath = astar.findShortestPath(4, 24);
         final List<Integer> expectedPath = new ArrayList<>(List.of(4, 9, 8, 7, 6, 11, 16, 17, 18, 19, 24));

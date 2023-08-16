@@ -42,6 +42,8 @@ public final class Vector2D {
         return this.x * vec.getX() + this.y * vec.getY();
     }
 
+    // TODO add additive inverse
+
     public Vector2D normalize() {
         final double len = this.norm();
         this.x /= len;
