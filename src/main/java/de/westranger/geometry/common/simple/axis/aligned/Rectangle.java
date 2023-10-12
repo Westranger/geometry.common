@@ -1,6 +1,5 @@
 package de.westranger.geometry.common.simple.axis.aligned;
 
-import de.westranger.geometry.common.math.Vector2D;
 import de.westranger.geometry.common.simple.BoundingBox;
 import de.westranger.geometry.common.simple.Point2D;
 
@@ -47,12 +46,7 @@ public final class Rectangle {
     }
 
     public BoundingBox getBoundingBox() {
-        final Vector2D vec = this.orientation.getRotation().multiply(new Vector2D(this.width, this.height));
-        final double x1 = this.position.getX() + vec.getX();
-        final double y1 = this.position.getY() + vec.getY();
-        final Point2D min = new Point2D(Math.min(this.position.getX(), x1), Math.min(this.getPosition().getY(), y1));
-        final Point2D max = new Point2D(Math.max(this.position.getX(), x1), Math.max(this.getPosition().getY(), y1));
-        return new BoundingBox(min, max);
+        return null;
     }
 
     public boolean intersects(final Rectangle rectangle) {

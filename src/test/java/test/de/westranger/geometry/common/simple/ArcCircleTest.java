@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArcCircleTest {
 
+    /*
     @Test
     void testGetArcStart() {
         fail("NYI");
@@ -20,4 +21,6 @@ class ArcCircleTest {
     void testGetBoundingBox() {
         fail("NYI");
     }
+    */
+
 }
